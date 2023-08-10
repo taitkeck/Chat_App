@@ -1,0 +1,6 @@
+.chatText {
+    margin: 20px;
+    min-height: 30px;
+    border: green solid 2px;
+    border-radius: 12px;
+}
