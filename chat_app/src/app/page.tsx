@@ -1,5 +1,6 @@
 "use client"
 import Head from 'next/head'
+import { Box } from "@mui/material";
 import dynamic from 'next/dynamic'
 
 const AblyChatComponent = dynamic(() => import('../../components/AblyChatComponent.jsx'), { ssr: false });

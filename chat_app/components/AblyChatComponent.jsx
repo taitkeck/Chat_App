@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, KeyboardEvent } from 'react';
 import { useChannel } from "./AblyReactEffect";
 import styles from './AblyChatComponent.module.css';
 
@@ -20,6 +20,7 @@ const AblyChatComponent = () => {
 
         const history = receivedMessages.slice(-199);
         setMessages([...history, message]);
+        console.log(receivedMessages);
 
         // Then finally, we take the message history, and combine it with the new message
         // This means we'll always have up to 199 message + 1 new message, stored using the
@@ -33,12 +34,12 @@ const AblyChatComponent = () => {
     }
 
     const handleFormSubmission = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         sendChatMessage(messageText);
     }
 
     const handleKeyPress = (event) => {
-        if (e.charCode !== 13 || messageTextIsEmpty) {
+        if (event.charCode !== 13 || messageTextIsEmpty) {
             return;
         }
         sendChatMessage(messageText);
@@ -46,6 +47,7 @@ const AblyChatComponent = () => {
     }
 
     const messages = receivedMessages.map((message, index) => {
+        console.log("Inside map");
         const author = message.connectionId === ably.connection.id ? "me" : "other";
         return <span key={index} className={styles.message} data-author={author}>{message.data}</span>;
     });
@@ -57,7 +59,7 @@ const AblyChatComponent = () => {
         <div className={styles.chatHolder}>
             <div className={styles.chatText}>
                 {messages}
-                <div ref={(element) => { messageEnd = element; }}></div>
+                <div ref={(element) => { messageEnd = element; }} />
             </div>
             <form onSubmit={handleFormSubmission} className={styles.form}>
                 <textarea
@@ -65,7 +67,7 @@ const AblyChatComponent = () => {
                     value={messageText}
                     placeholder="Type a message..."
                     onChange={e => setMessageText(e.target.value)}
-                    // onKeyPress={handleKeyPress}
+                    onKeyPress={handleKeyPress}
                     className={styles.textarea}
                 ></textarea>
                 <button type="submit" className={styles.button} disabled={messageTextIsEmpty}>Send</button>
