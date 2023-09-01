@@ -32,3 +32,6 @@
     width: 640px;
     height: 125px;
 }
+.message {
+    border: 2px purple solid;
+}
