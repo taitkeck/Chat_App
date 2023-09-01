@@ -34,4 +34,6 @@
 }
 .message {
     border: 2px purple solid;
+    border-radius: 12px;
+    /* padding: 5px; */
 }

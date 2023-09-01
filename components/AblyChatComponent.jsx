@@ -46,10 +46,10 @@ const AblyChatComponent = () => {
         event.preventDefault();
     }
 
-    const messages = receivedMessages.map((message, index) => {
+    const messages = receivedMessages.map((message, index, key, i) => {
         console.log("Inside map");
         const author = message.connectionId === ably.connection.id ? "me" : "other";
-        return <span key={index} className={styles.message} data-author={author}>{message.data}</span>;
+        return( <><span key={index} className={styles.message} data-author={author}>{message.data}</span><br key={key}/></>);
     });
 
     useEffect(() => {
