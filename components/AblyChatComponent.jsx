@@ -20,7 +20,7 @@ const AblyChatComponent = () => {
 
         const history = receivedMessages.slice(-199);
         setMessages([...history, message]);
-        console.log(receivedMessages);
+        // console.log(receivedMessages);
 
         // Then finally, we take the message history, and combine it with the new message
         // This means we'll always have up to 199 message + 1 new message, stored using the
@@ -34,7 +34,7 @@ const AblyChatComponent = () => {
     }
 
     const handleFormSubmission = (event) => {
-        // event.preventDefault();
+        event.preventDefault();
         sendChatMessage(messageText);
     }
 
@@ -46,10 +46,18 @@ const AblyChatComponent = () => {
         event.preventDefault();
     }
 
-    const messages = receivedMessages.map((message, index, key, i) => {
+
+    const messages = receivedMessages.map((message, index) => {
         const author = message.connectionId === ably.connection.id ? "me" : "other";
-        console.log(author);
-        return( <><span key={index} className={styles.message} data-author={author}>{message.data}</span><br key={key}/></>);
+        let pass = null;
+        if (author == "me") {
+            pass = true;
+        }
+        if (author == "other") {
+            pass = false;
+        }
+        const authorName = pass ? styles.me : styles.other;
+        return( <div key={index} className={styles.messages}><span className={authorName} data-author={author}>{message.data}</span></div>);
     });
 
     useEffect(() => {
